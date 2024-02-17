@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import '../../class/alert.dart';
 import '../../class/navigator_bar.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
@@ -119,7 +120,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       width: double.infinity,
                       color: AppColors.white,
                       child: SfCalendar(
-                        view: CalendarView.day,
+                        view: CalendarView.week,
                         dataSource: MeetingDataSource(eventos),
                       ),
                     ),
@@ -131,13 +132,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       texto: "Franja",
                       onPressed: () {
                         setState(() {});
-                        final event = Appointment(
-                            startTime: DateTime.now().add(Duration(days: 3)),
-                            endTime: DateTime.now().add(Duration(hours: 1)),
-                            subject: 'Reunión de equipo',
-                            color: Colors.green);
-
-                        eventos.add(event);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AddEventState();
+                          },
+                        );
                       },
                     )
                   ],
@@ -183,7 +183,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: Align(
+                  child: const Align(
                       alignment: Alignment.topLeft,
                       child: Icon(
                         Icons.menu,
