@@ -1,4 +1,5 @@
 import 'package:disi_app/design_tools/tool_widgets/necesary_images.dart';
+import 'package:disi_app/src/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -17,6 +18,19 @@ class LoginPage extends ConsumerStatefulWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    void showSnackbar(BuildContext context, String message) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
+    }
+
+    ref.listen(authProvider, (previous, next) {
+      if (next.errorMessage.isEmpty) return;
+      showSnackbar(context, next.errorMessage);
+    });
+    String email = '';
+    String password = '';
+
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -60,6 +74,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: Center(
                       child: TextFormField(
+                        onChanged: (value) {
+                          email = value;
+                        },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -106,6 +123,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     color: AppColors.yellow.withOpacity(0.4),
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: TextFormField(
+                      onChanged: (value) {
+                        password = value;
+                      },
                       //    obscureText: ref.watch(obscure_text_login),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -161,7 +181,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     texto: "Login",
                     onPressed: () async {
                       //Ir a siguiente página
-                      Navigator.pushNamed(context, '/profilePage');
+                      ref
+                          .watch(authProvider.notifier)
+                          .loginUser(email, password);
                     },
                     textColor: AppColors.white,
                     fontSize: 4,

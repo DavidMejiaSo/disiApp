@@ -1,6 +1,8 @@
 import 'package:disi_app/design_tools/tool_widgets/appButtons.dart';
 import 'package:disi_app/design_tools/tool_widgets/app_colors.dart';
 import 'package:disi_app/design_tools/tool_widgets/tool_widgets.dart';
+import 'package:disi_app/enviroments/enviroments.dart';
+import 'package:disi_app/src/providers/auth_provider.dart';
 import 'package:disi_app/src/providers/events_provider.dart';
 
 import 'package:flutter/material.dart';
@@ -19,8 +21,15 @@ class ProfilePage extends ConsumerStatefulWidget {
 
 class _ProfilePageState extends ConsumerState<ProfilePage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final eventos = ref.watch(events_list);
+    final eventos = ref.watch(events_list); //--Provider de la lista de horas
+    final user = ref.watch(authProvider).user; //----Provider de usuario
     return Scaffold(
         drawer: MyDrawer.buildDrawer(context),
         body: SafeArea(
@@ -38,7 +47,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    profilePhoto(),
+                    profilePhoto(user!.photoUrl, user.name),
                     //-----------Siguiente parte--------------//
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -55,14 +64,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       ),
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: AppWidgets.smallText(
-                          context,
-                          'Ha colaborado con importantes bandas de metal de la región y participado en trabajos discográficos de diversosgéneros como reggae, indierock y pop. Cofundador de Disillumination y parte fundamental en la creaciónde los trabajos musicales.',
-                          4,
-                          color: Colors.white),
-                    ),
                     //---------------------------------------------------------------//
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18.0),
@@ -148,90 +149,61 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         ));
   }
 
-  Widget profilePhoto() {
+  Widget profilePhoto(String imageUrl, String name) {
+    String url = Enviroment.Url; // URL dirección
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          image: const DecorationImage(
-              image: NetworkImage(
-                  'https://scontent.fclo1-3.fna.fbcdn.net/v/t39.30808-6/369263287_6869034213135486_6644669060429074549_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=efb6e6&_nc_eui2=AeGBaNHKqDnH2FxrtX7qaF9nJXoWGSndd7glehYZKd13uKl9tfkp6wTmYsA932r1bZJ6zmAeP5r7iedhO-H3naj3&_nc_ohc=60T1_G0mWYkAX93RDfG&_nc_ht=scontent.fclo1-3.fna&cb_e2o_trans=t&oh=00_AfAo6QjMJZeRsHgHSZa-upjHqRyWyaqnr6l6syVE5NTSFQ&oe=65D19645'),
-              fit: BoxFit.cover),
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.transparent,
-              Colors.black.withOpacity(0.5),
-              Colors.black.withOpacity(0.8),
-              Colors.black.withOpacity(0.1),
-            ],
-          )),
+        borderRadius: BorderRadius.circular(20),
+        image: DecorationImage(
+          image: NetworkImage('$url$imageUrl'),
+          fit: BoxFit.cover,
+        ),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.transparent,
+            Colors.black.withOpacity(0.5),
+            Colors.black.withOpacity(0.8),
+            Colors.black.withOpacity(0.1),
+          ],
+        ),
+      ),
       height: MediaQuery.of(context).size.height * 0.7,
       //width: MediaQuery.of(context).size.width * 0.9,
 
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: 18.0), //margen entre container padre y columna
-
+        padding: const EdgeInsets.symmetric(horizontal: 18.0),
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment:
+                MainAxisAlignment.end, // Alinea la columna al final
+            crossAxisAlignment:
+                CrossAxisAlignment.start, // Alinea el Row al principio
             children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Align(
-                      alignment: Alignment.topLeft,
-                      child: Icon(
-                        Icons.menu,
-                        color: Colors.white,
-                        size: 30,
-                      )),
+              GestureDetector(
+                onTap: () {
+                  ref.watch(authProvider.notifier).logout();
+                },
+                child: Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.3,
-                //width: MediaQuery.of(context).size.width * 0.9,
-                child: Column(
-                  children: [
-                    const Expanded(
-                      child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Icon(Icons.message, color: Colors.white)),
-                    ),
-                    const Expanded(
-                      child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Icon(
-                            Icons.heart_broken,
-                            color: Colors.white,
-                          )),
-                    ),
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              AppWidgets.mainText(context, "David Mejía", 10,
-                                  color: Colors.white),
-                              const Icon(Icons.facebook)
-                            ],
-                          ),
-                          const Spacer(),
-                          const Icon(
-                            Icons.person_add,
-                            color: Colors.white,
-                            size: 40,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )
+              Spacer(), // Espacio entre el icono y el Row
+              Row(
+                children: [
+                  AppWidgets.mainText(context, name, 6, color: Colors.white),
+                  Spacer(),
+                  Icon(
+                    Icons.queue_music,
+                    color: Colors.white,
+                    size: 40,
+                  ),
+                ],
+              ),
             ],
           ),
         ),

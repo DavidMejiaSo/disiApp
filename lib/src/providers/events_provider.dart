@@ -1,8 +1,8 @@
 import 'package:riverpod/riverpod.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-//All provides temporales antes de crear el Backend
-
+//All provides temporales antes de crear el Backend-------//
+//---------------------------------PROVIDER HORAS DISPONIBLE INDIVIDUALES DE EL INTEGRANTE LOGEADO-------------------//
 final events_list = StateProvider<List<Appointment>>(
   (ref) {
     return []; //---SUBTOTAL

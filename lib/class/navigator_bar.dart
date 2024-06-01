@@ -2,6 +2,7 @@ import 'package:disi_app/design_tools/tool_widgets/app_colors.dart';
 import 'package:disi_app/design_tools/tool_widgets/necesary_images.dart';
 import 'package:disi_app/design_tools/tool_widgets/tool_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MyDrawer {
   static Widget buildDrawer(BuildContext context) {
@@ -24,10 +25,12 @@ class MyDrawer {
           ),
           ListTile(
             leading: Icon(Icons.music_note),
-            title: const Text('Ensayos'),
+            title: const Text('Eventos'),
             onTap: () {
               // Acción cuando se selecciona la opción Ensayos
-              Navigator.pop(context); // Cierra el Drawer
+              //Ir a siguiente página
+              GoRouter.of(context).go('/concertsPage');
+              ; // Cierra el Drawer
             },
           ),
           ListTile(
@@ -35,7 +38,7 @@ class MyDrawer {
             title: const Text('Muro'),
             onTap: () {
               // Acción cuando se selecciona la opción Muro
-              Navigator.pop(context); // Cierra el Drawer
+              Navigator.pushNamed(context, '/wallPage'); // Cierra el Drawer
             },
           ),
           ListTile(
@@ -43,7 +46,11 @@ class MyDrawer {
             title: const Text('Perfil'),
             onTap: () {
               // Acción cuando se selecciona la opción Perfil
-              Navigator.pop(context); // Cierra el Drawer
+              //Ir a siguiente página
+              GoRouter.of(context).go('/profilePage');
+              ;
+
+              ; // Cierra el Drawer
             },
           ),
           ListTile(
@@ -59,7 +66,8 @@ class MyDrawer {
             title: const Text('Crew'),
             onTap: () {
               // Acción cuando se selecciona la opción Crew
-              Navigator.pop(context); // Cierra el Drawer
+              GoRouter.of(context).go('/crewPage');
+              ; // Cierra el Drawer
             },
           ),
           ListTile(

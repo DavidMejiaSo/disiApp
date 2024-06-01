@@ -1,27 +1,26 @@
-import 'package:disi_app/src/screens/login_page.dart';
-import 'package:disi_app/src/screens/profile_page.dart';
-import 'package:disi_app/src/screens/prueba_sockets.dart';
+import 'package:disi_app/router/routes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'enviroments/enviroments.dart';
+
 void main() async {
+  await Enviroment.initEnviroment();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appRouter = ref.watch(goRouterProvider);
+
+    return MaterialApp.router(
+      routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/loginPage',
-      routes: {
-        '/loginPage': (context) => const LoginPage(),
-        '/profilePage': (context) => const ProfilePage(),
-        '/socket': (context) => const WebSocketDemo()
-      },
     );
   }
 }

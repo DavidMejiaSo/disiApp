@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -20,7 +21,7 @@ class _AddEventStateState extends ConsumerState<AddEventState> {
   Widget build(BuildContext context) {
     final eventos = ref.watch(events_list);
     return AlertDialog(
-      title: Text('Agregar Evento'),
+      title: const Text('Agregar Evento'),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -32,7 +33,7 @@ class _AddEventStateState extends ConsumerState<AddEventState> {
                     ? '${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}'
                     : '',
               ),
-              decoration: InputDecoration(labelText: 'Fecha'),
+              decoration: const InputDecoration(labelText: 'Fecha'),
               onTap: () async {
                 final date = await showDatePicker(
                   context: context,
@@ -54,7 +55,7 @@ class _AddEventStateState extends ConsumerState<AddEventState> {
                     ? '${selectedStartTime!.hour}:${selectedStartTime!.minute}'
                     : '',
               ),
-              decoration: InputDecoration(labelText: 'Hora de inicio'),
+              decoration: const InputDecoration(labelText: 'Hora de inicio'),
               onTap: () async {
                 final time = await showTimePicker(
                   context: context,
@@ -74,7 +75,7 @@ class _AddEventStateState extends ConsumerState<AddEventState> {
                     ? '${selectedEndTime!.hour}:${selectedEndTime!.minute}'
                     : '',
               ),
-              decoration: InputDecoration(labelText: 'Hora final'),
+              decoration: const InputDecoration(labelText: 'Hora final'),
               onTap: () async {
                 final time = await showTimePicker(
                   context: context,
@@ -87,10 +88,6 @@ class _AddEventStateState extends ConsumerState<AddEventState> {
                 }
               },
             ),
-            TextField(
-              //controller: _descriptionController,
-              decoration: InputDecoration(labelText: 'Descripción'),
-            ),
           ],
         ),
       ),
@@ -99,10 +96,11 @@ class _AddEventStateState extends ConsumerState<AddEventState> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Cancelar'),
+          child: const Text('Cancelar'),
         ),
         ElevatedButton(
           onPressed: () {
+            setState(() {});
             if (selectedDate != null &&
                 selectedStartTime != null &&
                 selectedEndTime != null) {
@@ -123,12 +121,14 @@ class _AddEventStateState extends ConsumerState<AddEventState> {
               final event = Appointment(
                 startTime: startTime,
                 endTime: endTime,
-                subject: 'gfh',
                 color: Colors.green,
               );
 
               eventos.add(event);
-              Navigator.pop(context);
+
+              //Ir a siguiente página
+              GoRouter.of(context).pop();
+              ;
             }
           },
           child: const Text('Agregar'),
