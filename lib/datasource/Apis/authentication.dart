@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 import '../../enviroments/enviroments.dart';
@@ -21,6 +23,20 @@ class Authentication {
   }
 
   Future<User> login(String email, String password) async {
+    try {
+      final response = await dio
+          .post('/login', data: {'email': email, 'password': password});
+
+      final user = UserMapper.simpleUserJsonToEntity(response.data);
+
+      return user;
+    } catch (e) {
+      throw Exception("Algo salió mal ${e.toString()}");
+    }
+  }
+
+  Future<User> register(
+      String email, String password, String name, File photo) async {
     try {
       final response = await dio
           .post('/login', data: {'email': email, 'password': password});

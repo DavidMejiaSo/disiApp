@@ -184,7 +184,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             children: [
               GestureDetector(
                 onTap: () {
-                  ref.watch(authProvider.notifier).logout();
+                  // ref.watch(authProvider.notifier).logout();
                 },
                 child: Icon(
                   Icons.menu,

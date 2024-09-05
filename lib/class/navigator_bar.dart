@@ -42,15 +42,14 @@ class MyDrawer {
             },
           ),
           ListTile(
-            leading: Icon(Icons.person),
+            leading: const Icon(Icons.person),
             title: const Text('Perfil'),
             onTap: () {
               // Acción cuando se selecciona la opción Perfil
               //Ir a siguiente página
               GoRouter.of(context).go('/profilePage');
-              ;
 
-              ; // Cierra el Drawer
+              // Cierra el Drawer
             },
           ),
           ListTile(

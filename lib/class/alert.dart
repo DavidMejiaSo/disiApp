@@ -127,8 +127,7 @@ class _AddEventStateState extends ConsumerState<AddEventState> {
               eventos.add(event);
 
               //Ir a siguiente página
-              GoRouter.of(context).pop();
-              ;
+              print(event.toString());
             }
           },
           child: const Text('Agregar'),
