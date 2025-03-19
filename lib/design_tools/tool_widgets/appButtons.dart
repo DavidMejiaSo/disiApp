@@ -24,7 +24,7 @@ class AppButtons {
     final ButtonStyle style = ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       padding: padding,
-      primary: primaryColor,
+      //primary: primaryColor,
       textStyle: TextStyle(
         fontSize: buttonFontSize,
         fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class AppButtons {
     final ButtonStyle style = ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       padding: padding,
-      primary: primaryColor,
+      //primary: primaryColor,
       textStyle: TextStyle(
         fontSize: buttonFontSize,
         fontWeight: FontWeight.bold,
@@ -109,7 +109,7 @@ class AppButtons {
     final ButtonStyle style = ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       padding: padding,
-      primary: primaryColor,
+      //primary: primaryColor,
       textStyle: TextStyle(
         fontSize: buttonFontSize,
         fontWeight: FontWeight.bold,

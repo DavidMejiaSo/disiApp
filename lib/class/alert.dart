@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -127,6 +127,7 @@ class _AddEventStateState extends ConsumerState<AddEventState> {
               eventos.add(event);
 
               //Ir a siguiente página
+              print("AQUÍ ESTÁN LAS HORAS");
               print(event.toString());
             }
           },
